@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ShaZan</title>
+</head>
+<body>
+    <h1>ShaZan</h1>
+    
+    
+    <p>Welcome to ShaZan! This is your note-taking platform, where you can keep all of your ideas and thoughts into one place.</p>
+    <link> For user feedback: https://forms.gle/xmeUoKoSptDrjQYo8
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        body {
+            font-family:'Times New Roman', Times, serif
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            background-color: #b3d1ee;
+            max-height: 500px;
+            max-width: 2000px;
+            position: center;
+            text-decoration-color: #000000;
+            text-emphasis-color: bbbbbb;
+        
+
+        }
+        
+        p { size: 14;}
+    
+        
+
+        .note-form {
+            margin-bottom: 20px;
+        }
+
+        .note-form label {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .note-form input[type="text"],
+        .note-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .note-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .note-item {
+            background-color: #f5f5f5;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .note-item .note-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .note-item .note-content {
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .note-item .note-date {
+            font-size: 14px;
+            color: #777;
+        }
+
+        .note-item .note-actions {
+            margin-top: 10px;
+        }
+
+        .note-item .note-actions button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1></h1>
+        <form class="note-form">
+            <label for="note-title">Topic:</label>
+            <input type="text" id="note-title" placeholder="Enter a topic...">
+
+            <label for="note-content">Content:</label>
+            <textarea id="note-content" rows="5" placeholder="Start writing!"></textarea>
+
+            <button type="button" onclick="saveNote()">Save</button>
+        </form>
+
+        <ul class="note-list" id="note-list"></ul>
+    </div>
+
+    <script>
+        function getFormattedDate() {
+            const date = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString(undefined, options);
+        }
+
+        function saveNote() {
+            const title = document.getElementById('note-title').value;
+            const content = document.getElementById('note-content').value;
+            const date = getFormattedDate();
+
+            const note = {
+                title: title,
+                content: content,
+                date: date
+            };
+
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes.push(note);
+
+            localStorage.setItem('notes', JSON.stringify(notes));
+
+            displayNotes();
+            document.getElementById('note-title').value = '';
+            document.getElementById('note-content').value = '';
+        }
+
+        function deleteNote(index) {
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes.splice(index, 1);
+            localStorage.setItem('notes', JSON.stringify(notes));
+            displayNotes();
+        }
+
+        function displayNotes() {
+            const noteList = document.getElementById('note-list');
+            noteList.innerHTML = '';
+
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+
+            notes.forEach((note, index) => {
+                const li = document.createElement('li');
+                li.classList.add('note-item');
+
+                const title = document.createElement('div');
+                title.classList.add('note-title');
+                title.textContent = note.title;
+
+                const content = document.createElement('div');
+                content.classList.add('note-content');
+                content.textContent = note.content;
+
+                const date = document.createElement('div');
+                date.classList.add('note-date');
+                date.textContent = note.date;
+
+                const actions = document.createElement('div');
+                actions.classList.add('note-actions');
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener('click', () => deleteNote(index));
+
+                actions.appendChild(deleteButton);
+
+                li.appendChild(title);
+                li.appendChild(content);
+                li.appendChild(date);
+                li.appendChild(actions);
+
+                noteList.appendChild(li);
+            });
+        }
+
+        displayNotes();
+    </script>
+</body>
+</html>
+
+    
+
+    
+    
+   
+
+
+
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Notes</title>
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .folder {
+            margin-bottom: 20px;
+        }
+        
+        .folder input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .folder button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .folder-item {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="folder">
+            <input type="text" id="folderNameInput" placeholder="Enter folder name">
+            <button onclick="addFolder()">Add Folder</button>
+        </div>
+
+        <div id="folderList">
+            <!-- Folder list will be dynamically generated here -->
+        </div>
+    </div>
+
+    <script>
+        function addFolder() {
+            var folderNameInput = document.getElementById("folderNameInput");
+            var folderName = folderNameInput.value;
+            
+            // Create a new folder element
+            var folderElement = document.createElement("div");
+            folderElement.className = "folder-item";
+            folderElement.innerHTML = folderName;
+            
+            // Append the folder element to the folder list
+            var folderList = document.getElementById("folderList");
+            folderList.appendChild(folderElement);
+            
+            // Clear the input field after adding the folder
+            folderNameInput.value = "";
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+    <html>
+    <head>
+    
+    
+        <div class="container">
+            <!-- Your note-taking section here -->
+        </div>
+    
+        <footer>
+            <p>&copy; 2023 ShaZan. All rights reserved.</p>
+        </footer>
+    </body>
+    </html>
